@@ -1,0 +1,7 @@
+# Python
+.ipynb_checkpoints
+.mypy_cache
+.pytest_cache
+.idea/
+hvac_opt/__pycache__/
+hvac_opt/tests/__pycache__/

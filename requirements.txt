@@ -1,0 +1,6 @@
+pytest
+pandas
+numpy
+typing
+matplotlib
+pulp
