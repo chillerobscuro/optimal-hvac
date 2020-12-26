@@ -19,7 +19,9 @@ your system's max wattage with the `HVAC.maximum_power` parameter.
 To optimize integer or binary control (only on or off), set `RunSim` class `int_opt_only` parameter to True, and
 adjust `window_size` as necessary to account for the slowdown added by integer constraints.
 
-To run simulation with test data and output plots, run `python simulation.py`.
+To add new temperature and energy cost forecasts, add CSV to `data/` folder.
+
+To run simulation with test data and output plots, run `python simulation.py`
 
 Run tests with `pytest`
 

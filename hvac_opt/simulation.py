@@ -21,11 +21,12 @@ class RunSim:
         initial_building_temperature: float = 19.0,
         low_temp_threshold: float = 18.0,
         high_temp_threshold: float = 20.0,
+        maximum_power: float = 10e3,
         window_size: int = 48,
         verbose: bool = True,
         int_opt_only: bool = False,
         plot: bool = True,
-        save_plot_loc: str = "images/test_plot.png"
+        save_plot_loc: Union[Path, str] = base_path / "images/test_plot.png"
     ) -> None:
         """
         Run the optimization algorithms stepwise and compute aggregate stats
@@ -45,6 +46,7 @@ class RunSim:
         self.temperature = initial_building_temperature
         self.low_thresh = low_temp_threshold
         self.high_thresh = high_temp_threshold
+        self.maximum_power = maximum_power,
         self.window_size = window_size if not window_size % 2 else window_size - 1  # must be even
         self.control_regime: List[float] = []
         self.house_temps: List[float] = []
@@ -102,10 +104,13 @@ class RunSim:
         Compute total cost of this control regime
         """
         self.total_cost = sum(
-            [abs(self.control_regime[x]) * self.energy_cost[x] for x in range(self.num_steps)]
+            [abs(self.control_regime[x]*self.maximum_power) * self.energy_cost[x] for x in range(self.num_steps)]
         )
 
     def run_on_off(self):
+        """
+        Run simple model with binary control
+        """
         h = HVAC(
             self.energy_cost,
             self.outdoor_temps,
@@ -169,13 +174,13 @@ def run_sims(opt_path: str = 'images/optimized.png', on_off_path: str = 'images/
     Run the Linear Optimization and on/off control, save plots for each
     """
     dff = pd.read_csv(base_path / 'data/test_data.csv')
-    energies = dff['energies'].values
+    energy_cost = dff['energy_cost'].values
     outdoor_temp = dff['outdoor_temp'].values
 
-    hs = RunSim(energies, outdoor_temp, verbose=False, save_plot_loc=base_path / opt_path)
+    hs = RunSim(energy_cost, outdoor_temp, verbose=False, save_plot_loc=base_path / opt_path)
     hs.run()
 
-    hs = RunSim(energies, outdoor_temp, verbose=False, save_plot_loc=base_path / on_off_path)
+    hs = RunSim(energy_cost, outdoor_temp, verbose=False, save_plot_loc=base_path / on_off_path)
     hs.run_on_off()
 
 
