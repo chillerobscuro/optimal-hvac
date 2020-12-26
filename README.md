@@ -3,7 +3,7 @@
 This model finds the optimal control routine for heating and cooling a building based on the variable energy cost from
 the grid. 
 
-<img src="./docs/test_img.jpg" alt="Test data" width="800">
+<img src="./docs/test_img.png" alt="Test data" width="800">
 
 The cost of energy can be monetary, or a quantified carbon impact as demonstrated in
 [this paper](https://www.watttime.org/app/uploads/2019/03/Optimal-Refrigeration-Control-For-Soda-Vending-Machines_May_2015.pdf)
