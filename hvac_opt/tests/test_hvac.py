@@ -10,4 +10,4 @@ def test_hvac():
 
     hs = RunSim(energies, outdoor_temp, verbose=False, plot=False)
     hs.run()
-    assert round(hs.total_cost, 2) == 2402.66
+    assert round(hs.total_cost, 2) == 2622.32
